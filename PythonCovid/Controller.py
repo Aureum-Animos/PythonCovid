@@ -6,8 +6,8 @@
 import csv
 import Country as Country
 import pandas as pd
-import numpy as np
 from matplotlib import pyplot as plt
+import matplotlib, random
 
 """ Class object for the Controller, manipulates the data """
 
@@ -160,6 +160,9 @@ class Controller(object):
     none
     """
     def display_pieChart(self, x):
+
+        # load list
+        self.load_list()
         # Trim to the first 1000 records
         del self.covidList[x:]
         # convert the list back to a dataframe using Pandas
@@ -169,8 +172,12 @@ class Controller(object):
         # Group the cases by Country, sum the cases for each country
         datasum = data.Cases.groupby(data.Name_en).sum()
         # Give a title to the plot
-        plt.title("COVID Cases by Country")
+        plt.title("COVID Cases from March-September 2020")
         # Generate the plot as a pie chart
-        datasum.plot(kind='pie')
+        datasum.plot(kind='barh', color=['orange'])
+        # set x axis and y axis label
+        plt.xlabel("Total COVID Cases")
+        plt.ylabel("Country Name")
+        plt.tight_layout()
         # show the pie chart
         plt.show()
